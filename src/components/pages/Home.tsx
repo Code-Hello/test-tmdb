@@ -1,12 +1,12 @@
-import { Box } from '@chakra-ui/react';
 import LatestMovies from '@components/organisms/LatestMovies';
+import Movies from '../organisms/Movies';
 
 const Home = () => {
   return (
     <div>
-      <Box>
-        <LatestMovies />
-      </Box>
+      <LatestMovies />
+
+      <Movies />
     </div>
   );
 };

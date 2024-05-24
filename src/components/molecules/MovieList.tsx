@@ -23,7 +23,7 @@ const MovieList = ({ movies, loading }: MovieListProps) => {
         </SimpleGrid>
       ) : (
         <Stack minH="200px" justifyContent="center" alignItems="center">
-          <Text>No latest film found for the period searched ...</Text>
+          <Text>No film found for your research ...</Text>
         </Stack>
       )}
     </Skeleton>
