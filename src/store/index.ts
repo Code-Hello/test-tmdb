@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import latestMoviesReducer from './slices/latestMoviesSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    latestMovies: latestMoviesReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
