@@ -1,5 +1,6 @@
 enum RoutePath {
   Home = '/',
+  Movie = 'movie',
   Oops = '*',
 }
 
