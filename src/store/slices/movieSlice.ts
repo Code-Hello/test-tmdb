@@ -5,10 +5,12 @@ import {
 } from '@reduxjs/toolkit';
 import API from '../../config/api/instance';
 import { ApiCallStatus } from '../../utils/apiCallStatus';
-import { Movie } from '@/types/movie';
+import { PaginatedRes } from '@/types/api';
+import { Movie, Movies } from '@/types/movie';
 
 export type MovieState = {
   data?: Movie;
+  recommendations: Movies;
   loading: boolean;
   status?: ApiCallStatus;
   error?: SerializedError;
@@ -16,6 +18,7 @@ export type MovieState = {
 
 const initialState: MovieState = {
   data: undefined,
+  recommendations: [],
   loading: false,
   status: undefined,
   error: undefined,
@@ -26,6 +29,16 @@ export const getMovie = createAsyncThunk(
   async (movieId: string) => {
     const { data } = await API.get<Movie>(`/movie/${movieId}`);
     return data;
+  },
+);
+
+export const getMovieRecommendations = createAsyncThunk(
+  'movie/getMovieRecommendations',
+  async (movieId: string) => {
+    const { data } = await API.get<PaginatedRes<Movies>>(
+      `/movie/${movieId}/recommendations`,
+    );
+    return data.results.slice(0, 5);
   },
 );
 
@@ -49,6 +62,10 @@ const movieSlice = createSlice({
       state.status = ApiCallStatus.ERROR;
       state.error = error;
       state.loading = false;
+    });
+
+    builder.addCase(getMovieRecommendations.fulfilled, (state, { payload }) => {
+      state.recommendations = payload;
     });
   },
 });
